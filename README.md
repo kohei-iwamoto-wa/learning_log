@@ -7,4 +7,4 @@ SRE / Cloud / Infrastructure 学習記録
 - Linux / Kubernetes / AWS の理解
 
 ## 学習ルール
-- 毎日5分でも記録
+- 1行でもOK
