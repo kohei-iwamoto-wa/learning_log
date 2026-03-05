@@ -10,6 +10,7 @@ SRE / Cloud / Infrastructure 学習記録
 ## 学習ルール
 
 - 1行でもOK
+- 雑多に書いてOK
 
 ## 学習進捗
 
