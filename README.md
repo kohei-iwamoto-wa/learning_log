@@ -1,4 +1,4 @@
-# SRE Learning Log
+# Learning Log
 
 SRE / Cloud / Infrastructure 学習記録
 
