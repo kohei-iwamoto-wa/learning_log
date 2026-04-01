@@ -3,121 +3,16 @@
 ### 本日のテーマ
 
 * Linux
-  * プロセス
-
-※ わかったつもりをわかるに変える。
+  * プロセス管理
 
 ### 学んだこと
 
-#### そもそもプロセスとは？
 
-プロセスとは、実行中のプログラムのことです。
-
-* プロセスが持っている情報
-  * PID
-  * 実行している命令
-  * 使っているメモリ
-  * 開いているファイル
-  * 環境変数
-  * 標準入力・標準出力
-  * 権限関連
-  * 親プロセス情報（PPID）
-
-※ サービスはプロセス群のことです。
-　サービスは、systemctl で管理を行う。
-
-#### スレッドとは
-
-スレッドはプロセス内で動く細かい実行単位です。
-
-#### 実行中のプロセス
-
-`ps -f` で実行中のプロセスを確認することができる。 
-
-```
-sleep 300 & ps -f
-[1] 281894
-UID          PID    PPID  C STIME TTY          TIME CMD
-xxx-i+  261443  261079  0 11:18 pts/0    00:00:00 /usr/bin/bash --init-file /usr/share/code/resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-bash.sh
-xxx-i+  281894  261443  0 14:43 pts/0    00:00:00 sleep 300
-xxx-i+  281895  261443 99 14:43 pts/0    00:00:00 ps -f
-```
-
-* PID
-  * プロセス
-* PPID
-  * 親プロセス
-
-```
-# 特定の PID の負荷を調べる
-top -p <PID>
-```
-
-#### プロセス情報格納先
-
-/proc/<pid>/ に プロセスに関連するファイル、ディレクトリが格納されている。
-
-
-ls -l /proc で ディレクトリを確認する。
-
-※ 最右列が弟子レクトリ名です。
-
-プロセス番号ごとでディレクトリが分割されている。
-
-```
-ls -l /proc
--xr-xr-x  9 xxx-yyy        xxx-yyy                      0  4月  1 11:18 261443
-dr-xr-xr-x  9 xxx-yyy        xxx-yyy                      0  4月  1 11:18 261560
-dr-xr-xr-x  9 xxx-yyy        xxx-yyy                      0  4月  1 11:24 262577
-dr-xr-xr-x  9 root                 xxx-yyy                      0  3月 30 07:01 2641
-dr-xr-xr-x  9 xxx-yyy        xxx-yyy                      0  4月  1 12:30 269508
-```
-
-cat  /proc/2597/stack ファイルの内容
-
-詳しい情報が見たい場合はここで確認するのが良い
-
-```
-xxx-iwamoto@xxx-iwamoto:~/projects/learning_log$ sudo cat  /proc/2597/stack
-[<0>] poll_schedule_timeout.constprop.0+0x41/0x90
-[<0>] do_poll.constprop.0+0x2f0/0x360
-[<0>] do_sys_poll+0x19f/0x280
-[<0>] __x64_sys_poll+0xc5/0x150
-[<0>] x64_sys_call+0x14a8/0x2680
-[<0>] do_syscall_64+0x80/0xa40
-[<0>] entry_SYSCALL_64_after_hwframe+0x76/0x7e
-```
-
-### プロセスの優先度
-
-プロセスの優先度にはあり、これの優先度順に CPU が処理を行います。
-
-`ps -l` でプロセスの優先度の確認を行うことができます。
-
-`NI` 列が`優先度` の数値で NICE 値と呼ばれます。
-
-```
-ps -l
-F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
-0 S  1000  283820  283812  0  80   0 -  2695 do_wai pts/2    00:00:00 bash
-4 R  1000  287948  283820  0  80   0 -  2372 -      pts/2    00:00:00 ps
-```
-
-nice 値は、nice コマンドで更新可能です。動作中のプロセスを変更するにはrenice で変更する。
-
--19 が最優先、20が最も低い
-0は標準的な優先度です。
 
 ### 実務で使えること
 
-すぐには終わらなくて良いプロセスの優先度を下げることでその他の処理の邪魔にならないようにする。
 
 ### 今日の気づき
 
-プロセスの優先度について考えたことはなかった。
-
-優先度の変更をすることでメイン処理へ影響を少なくすることができる。
 
 ### 明日やること
-
-ジョブ管理
